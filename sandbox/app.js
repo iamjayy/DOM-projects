@@ -23,15 +23,17 @@ const posts = [
 
 // getPosts();
 
-function createPost(post, callback) {
-  setTimeout(() => {
-    posts.push(post);
-    callback();
-  }, 2000);
+function createPost(post) {
+  return new Promise(function(resolve, reject) {
+    setTimeout(() => {
+      posts.push(post);
+      resolve();
+    }, 2000);
+  });
 }
 
 function getPosts() {
-  setTimeout(() => {
+  setTimeout(function() {
     let output = "";
     posts.forEach(function(post) {
       output += `<li>${post.title}</li>`;
@@ -40,4 +42,4 @@ function getPosts() {
   }, 1000);
 }
 
-createPost({ title: "Post three", body: "this is post three" }, getPosts);
+createPost({ title: "Post three", body: "this is post three" }).then(getPosts);
